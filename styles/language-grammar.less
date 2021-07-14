@@ -1,0 +1,64 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+//.language-grammar {
+//}
+
+atom-text-editor .syntax--source {
+	&.syntax--grammar {
+		// Palette
+		--grey: #616161;
+		--orange: #ff8c00;
+		--green: #A1C181;
+		--blue: #96C5DF;
+		--purple: #E480F3;
+
+		// Grammar Rules
+		.syntax--production {
+			font-style: bold;
+			&.syntax--start {
+				color: var(--orange);
+			}
+
+			&.syntax--cont {
+				color: var(--orange);
+			}
+
+			&.syntax--operator {
+				color: var(--orange);
+			}
+		}
+
+		.syntax--element {
+			&.syntax--terminal {
+				color: var(--purple);
+			}
+
+			&.syntax--nonterminal {
+				color: var(--blue);
+			}
+
+			&.syntax--literal {
+				color: var(--green);
+			}
+		}
+
+		.syntax--text {
+			&.syntax--comment {
+				color: var(--grey);
+				font-style: italic;
+			}
+
+			&.syntax--normal {
+
+			}
+
+			&.syntax--other {
+
+			}
+		}
+	}
+}

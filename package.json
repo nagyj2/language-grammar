@@ -1,0 +1,16 @@
+{
+  "name": "language-example",
+  "version": "1.0.0",
+  "description": "A simple syntax for an EBNF inspired, attribute grammar.",
+  "repository": "https://github.com/nagyj2/language-grammar",
+  "keywords": [
+    "syntax",
+    "highlighting",
+    "grammar"
+  ],
+  "license": "MIT",
+  "bugs": "https://github.com/nagyj2/language-grammar/issues",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  }
+}

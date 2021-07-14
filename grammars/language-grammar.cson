@@ -1,0 +1,209 @@
+# grammars/language-grammar.cson
+
+scopeName: 'source.grammar'
+name: 'Grammar'
+fileTypes: [ 'grammar' ]
+limitLineLength: false
+
+patterns: [
+  {
+    match: '#.*$'
+    name: 'text.comment.grammar'
+		comment: 'pound comment'
+  }
+  {
+    match: '//.*$'
+    name: 'text.comment.grammar'
+		comment: 'double slash comment'
+  }
+  {
+    begin: '(/\\*)'
+    beginCaptures:
+      1: { name: 'text.comment.grammar' }
+    end: '(\\*/)'
+    endCaptures:
+      1: { name: 'text.comment.grammar'}
+    contentName: 'text.comment.grammar'
+		comment: '/**/ style multiline comment'
+  }
+	{
+		begin: '^\\s*([A-Z0-9_]+)\\s*(:(=|:=)?)'
+		beginCaptures:
+			1: { name: 'element.terminal.grammar' }
+			2: { name: 'production.start.grammar' }
+		end: '^\\s*$'
+		comment: 'terminal definition'
+		patterns: [
+      { include : '$self' }
+			{
+				match: '^\\s*\\|'
+				name: 'production.cont.grammar'
+        #comment: 'a grammar continuation'
+			}
+			{
+				match: '\'[^\']*\''
+				name: 'element.literal.grammar'
+        #comment: 'a quoted literal'
+			}
+			{
+				begin: '(<<)'
+				beginCaptures:
+					1: { name: 'production.operator.grammar' }
+				end: '(>>)'
+				endCaptures:
+					1: { name: 'production.operator.grammar' }
+				comment: 'action block'
+			}
+			{
+				match: '[\\S\\]]+'
+				name: 'element.literal.grammar'
+        #comment: 'an assumed literal'
+			}
+		]
+	}
+	{
+		begin: '^\\s*([a-zA-Z0-9_]+)\\s*(:(=|:=)?)'
+		beginCaptures:
+			1: { name: 'element.nonterminal.grammar' }
+			2: { name: 'production.start.grammar' }
+		end: '^\\s*$'
+		comment: 'nonterminal definition'
+		patterns: [
+      { include : '$self' }
+			{
+				match: '^\\s*\\|'
+				name: 'production.cont.grammar'
+			}
+      {
+        match: '\'[^\']*\''
+        name: 'element.literal.grammar'
+      }
+      {
+        match: '\\\\[.+*|()\\[\\]{}?]'
+        name: 'element.literal.grammar'
+        comment: 'escaped grammar operators'
+      }
+      {
+        match: '[.+*|()\\[\\]{}?]'
+        name: 'text.production.operator.grammar'
+        comment: 'grammar operators'
+      }
+			{
+				match: '[A-Z0-9_]+'
+				name: 'element.terminal.grammar'
+			}
+			{
+				match: '[a-zA-Z0-9_]+'
+				name: 'element.nonterminal.grammar'
+			}
+			{
+				begin: '(<<)'
+				beginCaptures:
+					1: { name: 'production.operator.grammar' }
+				end: '(>>)'
+				endCaptures:
+					1: { name: 'production.operator.grammar' }
+				comment: 'action block. Do not highlight'
+			}
+			{
+				match: '[\\W]'
+				name: 'element.literal.grammar'
+				comment: 'a non-word character or space assumed to be a literal'
+			}
+		]
+
+	}
+]
+
+
+# 	{
+# 		begin: '^([A-Z0-9_]+)\\s*(:)'
+# 		beginCaptures:
+# 			1: { name: 'element.terminal.grammar' }
+# 			2: { name: 'production.start.grammar' }
+# 		end: '^$'
+# 		comment: 'terminal definition'
+# 		patterns: [
+#       { include : '$self' }
+# 			{
+# 				match: '^\\s*\\|'
+# 				name: 'production.cont.grammar'
+#         comment: 'pipe condinuation'
+# 			}
+# 			{
+# 				match: '\'[^\']*\''
+# 				name: 'element.literal.grammar'
+#         comment: 'quoted literal'
+# 			}
+#       {
+#         match: '[+\\*\\|\\{\\}]$'
+#         name: 'text.production.operator.grammar'
+#         comment: 'grammar operators'
+#       }
+# 			{
+# 				begin: '(<)[^>]+$'
+# 				beginCaptures:
+# 					1: { name: 'text.production.operator.grammar' }
+# 				end: '(>$)'
+# 				endCaptures:
+# 					1: { name: 'text.production.operator.grammar' }
+# 				comment: 'action block'
+#       }
+#       {
+#         match: '[\\W]+'
+#         name: 'element.literal.grammar'
+#         comment: 'an assumed literal'
+#       }
+# 		]
+# 	}
+# 	{
+# 		begin: '^([a-zA-Z0-9_]+)\\s*(:)'
+# 		beginCaptures:
+# 			1: { name: 'element.nonterminal.grammar' }
+# 			2: { name: 'production.start.grammar' }
+# 		end: '^$'
+# 		comment: 'nonterminal definition'
+# 		patterns: [
+#       { include : '$self' }
+#       {
+# 				match: '^\\s*\\|'
+# 				name: 'production.cont.grammar'
+#         comment: 'pipe condinuation'
+# 			}
+# 			{
+# 				match: '\'[^\']*\''
+# 				name: 'element.literal.grammar'
+#         comment: 'quoted literal'
+# 			}
+#       {
+#         match: '[A-Z0-9_]+'
+#         name: 'element.terminal.grammar'
+#         comment: 'a terminal'
+#       }
+#       {
+#         match: '[a-zA-Z0-9_]+'
+#         name: 'element.nonterminal.grammar'
+#         comment: 'a nonterminal'
+#       }
+#       {
+#         match: '[+\\*\\|\\{\\}]$'
+#         name: 'text.production.operator.grammar'
+#         comment: 'grammar operators'
+#       }
+# 			{
+# 				begin: '(<)[^>]+$'
+# 				beginCaptures:
+# 					1: { name: 'text.production.operator.grammar' }
+# 				end: '(>$)'
+# 				endCaptures:
+# 					1: { name: 'text.production.operator.grammar' }
+# 				comment: 'action block'
+#       }
+#       {
+# 				match: '[\\W]'
+# 				name: 'element.literal.grammar'
+# 				comment: 'an assumed literal'
+# 			}
+# 		]
+# 	}
+# ]

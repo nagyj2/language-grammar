@@ -1,0 +1,22 @@
+Grammar
+
+stmt:     expr           /* eval */   << print($1)    >>
+  |       IDENT = expr   /* save */   << save($1, $3) >>
+
+expr:     term '>' expr               << $$ = $1 > $2 >>
+  |       term '<' expr               << $$ = $1 < $2 >>
+
+term:     factor '+' term             << $$ = $1 + $2 >>
+  |       factor '-' term             << $$ = $1 - $2 >>
+
+subatom:  atom '*' subatom            << $$ = $1 * $2 >>
+  |       atom '/' subatom            << $$ = $1 / $2 >>
+
+subatom:  '-'? atom                   << $$ = ($1) ? -$2 : $2 >>
+
+atom: NUM     // simple integer
+  |   IDENT   // defined options
+
+IDENT:  a
+  |     b
+  |     c
